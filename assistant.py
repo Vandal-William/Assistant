@@ -1,18 +1,18 @@
 import speech_recognition as sr
-import pyttsx3 as ttx
 import pywhatkit
 import datetime
+from gtts import gTTS
+import os
    
-listener=sr.Recognizer()
-engine=ttx.init()
-voice=engine.getProperty('voices')
-engine.setProperty('voice','french') 
+listener= sr.Recognizer()
+TMP_FILE = "./tts_File"
 marche=True
 
-# fonction qui transforme le texte en parole et attend  
-def parler(text):
-    engine.say(text)
-    engine.runAndWait()
+
+def gtts(phrase_to_read):
+	tts = gTTS(text=phrase_to_read, lang="fr")
+	tts.save(TMP_FILE + ".mp3")
+	os.system("mpg321 -q {}{}".format(TMP_FILE, ".mp3"))
 
 def lancer_assistant(command):
     print(command)
@@ -21,24 +21,23 @@ def lancer_assistant(command):
         pywhatkit.playonyt(titre)
     elif 'heure' in command:
         heure=datetime.datetime.now().strftime('%H:%M')
-        print('il est'+' : '+heure)
+        gtts('il est'+heure)
     else:
-        print('je ne comprends pas')
+        gtts('je ne comprends pas')
+        ecouter()
 
 def ecouter():
 
-    try:
-        # ici on utilise la micro comme source
-        with sr.Microphone() as source:
-            print('Que puis-je faire pour vous ?')
-            # sert a générer une voix 
-            voix=listener.listen(source)
-            # interprète la voix avec google en français
-            command=listener.recognize_google(voix, language='fr-FR')
-            lancer_assistant(command)
-    except:
-        pass
-    return command
+    # ici on utilise la micro comme source
+    with sr.Microphone() as source:
+        gtts('Que puis-je faire pour vous ?')
+        # sert a générer une voix 
+        voix=listener.listen(source)
+        # interprète la voix avec google en français
+        command=listener.recognize_google(voix, language='fr-FR')
+        lancer_assistant(command)
+
+gtts("Bonjour, si vous voulez démarrer l'application dite, 'assistant' ")   
 
 while marche : 
 
@@ -46,6 +45,6 @@ while marche :
         voix=listener.listen(source)
         command=listener.recognize_google(voix, language='fr-FR')
         if 'assistant' in command:
-            command=ecouter()
+            ecouter()
             
     

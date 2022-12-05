@@ -13,10 +13,6 @@ Création d'un assistant virtuel vocale capable de :
 
 > Doc : https://pypi.org/project/SpeechRecognition/
 
-### pyttsx3 : Pour parler
-
-> Doc : https://pypi.org/project/pyttsx3/
-
 ### pywhatkit : Pour rechercher une video youtube
 
 > Doc : https://pypi.org/project/pywhatkit/
@@ -24,3 +20,11 @@ Création d'un assistant virtuel vocale capable de :
 ### datetime : Pour donner l'heure, package inclus dans phyton
 
 > Doc : https://docs.python.org/fr/3/library/datetime.html#examples-of-usage-datetime
+
+### gTTS : Google Text to Speech
+
+> Doc : https://gtts.readthedocs.io/en/latest/
+
+### mpg321: package APT
+
+> Doc : https://mpg321.sourceforge.net/
